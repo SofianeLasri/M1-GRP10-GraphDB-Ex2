@@ -1,35 +1,8 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from '@apollo/server/standalone';
-import {gql} from 'graphql-tag';
 import { resolvers } from "./resolvers.js";
-
-const typeDefs = gql`
-type Doctor {
-  id: String
-  name: String
-  speciality: Speciality
-  addresses: Address
-}
-
-type Address {
-  streetName: String
-}
-
-enum Speciality {
-  PSYCHOLOGIST
-  OPHTALMOLOGIST
-}
-
-type Query {
-  doctor(id: ID!): Doctor
-  doctors(specialities: [Speciality!]): [Doctor]
-  add(number1: Float!, number2: Float!): Float!
-  subtract(number1: Float!, number2: Float!): Float!
-  multiply(number1: Float!, number2: Float!): Float!
-  divide(number1: Float!, number2: Float!): Float!
-  closestColor(hexa: String!): String!
-}
-`
+import { TrackAPI } from "./datasources/TrackAPI.js";
+import { typeDefs } from "./schema.js";
 
 const server = new ApolloServer({
   typeDefs,
@@ -37,7 +10,15 @@ const server = new ApolloServer({
 })
 
 const {url} = await startStandaloneServer(server, {
-  listen: {port: 4000}
+  listen: {port: 4000},
+  context: async () => {
+    const {cache} = server
+    return {
+      dataSources: {
+        trackAPI: new TrackAPI({cache})
+      }
+    }
+  }
 })
 
 console.log(`🚀  Server ready at: ${url}`)
