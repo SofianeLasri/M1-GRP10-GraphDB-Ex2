@@ -11,12 +11,4 @@ export class TrackAPI extends RESTDataSource {
     getAuthorBy(id: string) {
         return this.get<AuthorModel>(`author/${id}`)
     }
-
-    getFilms() {
-        return this.get<FilmModel[]>('films')
-    }
-
-    getPeople() {
-        return this.get<PeopleModel[]>('people')
-    }
 }

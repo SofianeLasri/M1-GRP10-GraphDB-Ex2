@@ -21,15 +21,15 @@ export const resolvers: Resolvers = {
             return dataSources.trackAPI.getTracks()
         },
         getFilms: (_, __, {dataSources}) => {
-            return dataSources.trackAPI.getFilms()
+            return dataSources.ghibliAPI.getFilms()
         },
         getPeople: (_, __, {dataSources}) => {
-            return dataSources.trackAPI.getPeople()
+            return dataSources.ghibliAPI.getPeople()
         }
     },
     Track: {
         author: (parent, _, {dataSources}) => {
             return dataSources.trackAPI.getAuthorBy(parent.authorId)
         }
-    }
+    },
 }
