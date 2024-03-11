@@ -14,11 +14,25 @@ type Author {
   photo: String
 }
 
-type Query {
+type People {
+  id: ID!
+  name: String!
+  eyeColor: String!
+  films: [Film!]!
+}
 
+type Film {
+  id: ID!
+  title: String!
+  people: [People!]!
+}
+
+type Query {
   divide(number1: Int!, number2: Int!): Float
   multiply(number1: Int!, number2: Int!): Float
   closestColor(hexa: String!): String
   getTracks: [Track!]!
+  getFilms: [Film!]!
+  getPeople: [People!]!
 }
 `

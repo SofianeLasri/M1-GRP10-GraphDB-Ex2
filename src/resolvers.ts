@@ -19,6 +19,12 @@ export const resolvers: Resolvers = {
         },
         getTracks: (_, __, {dataSources}) => {
             return dataSources.trackAPI.getTracks()
+        },
+        getFilms: (_, __, {dataSources}) => {
+            return dataSources.trackAPI.getFilms()
+        },
+        getPeople: (_, __, {dataSources}) => {
+            return dataSources.trackAPI.getPeople()
         }
     },
     Track: {
