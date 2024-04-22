@@ -41,6 +41,24 @@ export const resolvers: Resolvers = {
                     track: null,
                 }
             }
+        },
+        incrementLikes: async (_, {id}, {dataSources}) => {
+            try {
+                const track = await dataSources.trackAPI.incrementLikes(id);
+                return {
+                    code: 200,
+                    message: 'Number of likes has been incremented',
+                    success: Boolean(track),
+                    track,
+                }
+            } catch (e) {
+                return {
+                    code: 304,
+                    message: 'Resource not modified',
+                    success: false,
+                    track: null,
+                }
+            }
         }
     },
     Film: {

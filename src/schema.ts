@@ -7,6 +7,7 @@ type Track {
   author: Author!
   thumbnail: String
   numberOfViews: Int
+  numberOfLikes: Int
 }
 
 type Author {
@@ -39,8 +40,16 @@ type Query {
 
 type Mutation {
   incrementTrackViews(id: ID!): IncrementTrackViewsResponse
+  incrementLikes(id: ID!): IncrementLikesResponse
 }
 type IncrementTrackViewsResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+  track: Track
+}
+
+type IncrementLikesResponse {
   code: Int!
   success: Boolean!
   message: String!
