@@ -68,4 +68,11 @@ type IncrementLikesResponse {
   message: String!
   track: Track
 }
+
+type SignInResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    user: User
+}
 `

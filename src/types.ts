@@ -215,6 +215,7 @@ export type ResolversTypes = {
   IncrementTrackViewsResponse: ResolverTypeWrapper<Omit<IncrementTrackViewsResponse, 'track'> & {
     track?: Maybe<ResolversTypes['Track']>
   }>;
+  SignInResponse: ResolverTypeWrapper<SignInResponse>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   People: ResolverTypeWrapper<PeopleModel>;
@@ -287,6 +288,7 @@ export type MutationResolvers<ContextType = DataSourceContext, ParentType extend
   createUser?: Resolver<Maybe<ResolversTypes['CreateUserResponse']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'password' | 'username'>>;
   incrementLikes?: Resolver<Maybe<ResolversTypes['IncrementLikesResponse']>, ParentType, ContextType, RequireFields<MutationIncrementLikesArgs, 'id'>>;
   incrementTrackViews?: Resolver<Maybe<ResolversTypes['IncrementTrackViewsResponse']>, ParentType, ContextType, RequireFields<MutationIncrementTrackViewsArgs, 'id'>>;
+  signIn?: Resolver<Maybe<ResolversTypes['SignInResponse']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'username' | 'password'>>;
 };
 
 export type PeopleResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['People'] = ResolversParentTypes['People']> = {
@@ -335,3 +337,15 @@ export type Resolvers<ContextType = DataSourceContext> = {
   User?: UserResolvers<ContextType>;
 };
 
+export type SignInResponse = {
+  __typename?: 'SignInResponse';
+  code: Scalars['Int']['output'];
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+  user?: Maybe<User>;
+};
+
+export type MutationSignInArgs = {
+  username: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
