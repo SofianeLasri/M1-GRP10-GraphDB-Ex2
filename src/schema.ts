@@ -41,6 +41,19 @@ type Query {
 type Mutation {
   incrementTrackViews(id: ID!): IncrementTrackViewsResponse
   incrementLikes(id: ID!): IncrementLikesResponse
+  createUser(username: String!, password: String!): CreateUserResponse
+}
+
+type CreateUserResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+  user: User
+}
+
+type User {
+  id: ID!
+  username: String!
 }
 type IncrementTrackViewsResponse {
   code: Int!
