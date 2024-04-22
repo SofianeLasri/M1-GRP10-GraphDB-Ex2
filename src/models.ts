@@ -1,5 +1,3 @@
-import {Film, People} from "./types";
-
 export type TrackModel = {
   id: string;
   title: string;
@@ -18,12 +16,12 @@ export type AuthorModel = {
 export type FilmModel = {
   id: string;
   title: string;
-  people: People[];
+  people: string[];
 }
 
 export type PeopleModel = {
   id: string;
   name: string;
   eye_color: string;
-  films: Film[];
+  films: string[];
 }

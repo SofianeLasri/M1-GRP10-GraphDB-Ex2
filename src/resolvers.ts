@@ -1,6 +1,6 @@
-import { GraphQLError } from "graphql";
-import { getClosestColor } from "./colors.js";
-import { Resolvers } from "./types.js";
+import {GraphQLError} from "graphql";
+import {getClosestColor} from "./colors.js";
+import {Resolvers} from "./types.js";
 
 export const resolvers: Resolvers = {
     Query: {
@@ -20,11 +20,38 @@ export const resolvers: Resolvers = {
         getTracks: (_, __, {dataSources}) => {
             return dataSources.trackAPI.getTracks()
         },
-        getFilms: (_, __, {dataSources}) => {
-            return dataSources.ghibliAPI.getFilms()
-        },
-        getPeople: (_, __, {dataSources}) => {
-            return dataSources.ghibliAPI.getPeople()
+        getFilms: (_, __, {dataSources}) => dataSources.ghibliAPI.getFilms(),
+        getPeople: (_, __, {dataSources}) => dataSources.ghibliAPI.getPeople(),
+    },
+    Mutation: {
+        incrementTrackViews: async (_, {id}, {dataSources}) => {
+            try {
+                const track = await dataSources.trackAPI.incrementTrackView(id);
+                return {
+                    code: 200,
+                    message: 'Number of views has been incremented',
+                    success: Boolean(track),
+                    track
+                }
+            } catch (e) {
+                return {
+                    code: 304,
+                    message: 'Resource not modified',
+                    success: false,
+                    track: null,
+                }
+            }
+        }
+    },
+    Film: {
+        people: ({people}, _, {dataSources}) => {
+            return dataSources.ghibliAPI.getPeopleByUrls(people)
+        }
+    },
+    People: {
+        eyeColor: ({eye_color}) => eye_color,
+        films: ({films}, _, {dataSources}) => {
+            return dataSources.ghibliAPI.getFilmsByUrls(films)
         }
     },
     Track: {
